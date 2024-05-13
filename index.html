@@ -7,32 +7,105 @@
     // 👉 CHALLENGE 1
     function profileActivation(profile, reason) {
 
+      if(profile.active){
+        if(reason){
+          profile.active=false;
+          profile.reason=reason;
+          return profile;
+        }else{
+          return "confirm status manually";
+        }
+      }else{    
+        profile.active=true;
+        delete profile.reason;
+      return profile;
+      }
     }
 
     // 👉 CHALLENGE 2
     function mineSweeper(grid, x, y) {
+      let result;
 
+      // alert(grid[x-1][y-1]);
+      // alert(grid.length);
+
+      if(x<1||x>3||y<1||y>3){
+        result= "invalid coordinates"
+      }else if(grid[y-1][x-1]==="🟥"){
+        result= "🟥 💀";
+      }else{
+        result= "🟦 🥳";
+      }
+      return result;
+      // + "[" + x + "," + y + "]"
     }
 
     // 👉 CHALLENGE 3
     function booleanize(obj) {
-
+      let returnVal;
+      let arrKeys =Object.keys(obj);
+      Object.keys(obj).forEach(key=>{
+        returnVal=obj;
+        if(key.length>9){
+          returnVal="shorten all prop names to 9 chars or less"; 
+        }else if(returnVal[key]===0){
+          returnVal[key]=false;
+        }else if(returnVal[key]===1){
+          returnVal[key]=true;
+        }else if(returnVal[key]===null){
+          delete returnVal[key];    
+        }
+      });
+      return returnVal;
     }
 
     // 👉 CHALLENGE 4
     function scrub(text, forbidden) {
+      let returnVal=text;
+      let length;
+      let xstr;
 
+      for(let i = 0;i<forbidden.length;i++){
+        length=forbidden[i].length;
+        xstr=Array(length+1).join("x");
+        returnVal=returnVal.replaceAll(forbidden[i],xstr);
+      }
+      return returnVal;
     }
 
     // 👉 CHALLENGE 5 (bonus, NOT graded)
     function normalizePhoneNumber(num) {
-
+      let returnVal;
+      let part1=num.slice(0,3);
+      let part2=num.slice(3,6);
+      let part3=num.slice(6,10);
+      returnVal=`(${part1}) ${part2}-${part3}`;
+      return returnVal;
     }
 
     // 👉 CHALLENGE 6 (bonus, NOT graded)
     function diceRolls() {
+      let rollCount=0;
+      let sixCount=0;
+      let rndVal=0;
 
+      while(sixCount<3){
+        rndVal=getRandomInt(6)+1;
+        rollCount++;
+        if(rndVal===6){
+          sixCount++;
+        }else{
+          sixCount=0;
+        }
+      }
+      function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+      }
+      return rollCount;
     }
+
+    diceRolls();
+
 
     // 🧪 DO NOT make any changes below this line ===================
     globalThis.challengeVersion = 1
@@ -146,6 +219,7 @@
       [["1111111111"], "(111) 111-1111"],
       [["9876543210"], "(987) 654-3210"],
     ])
+
     console.log('\nCHALLENGE 6 (OPTIONAL) does not have auto tests - diceRolls')
     function runTests(testName, func, tests) {
       let results = []
